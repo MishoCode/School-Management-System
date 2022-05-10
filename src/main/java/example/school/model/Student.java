@@ -2,20 +2,25 @@ package example.school.model;
 
 import example.school.dto.StudentDto;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "students")
+@EntityListeners(AuditingEntityListener.class)
 public class Student {
 
     @Id
@@ -24,6 +29,9 @@ public class Student {
 
     @Column
     private String name;
+
+    @CreatedDate
+    private Date date = new Date();
 
     @ManyToMany(mappedBy = "students")
     private List<Subject> subjects = new ArrayList<>();
